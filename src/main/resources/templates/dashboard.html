@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!-- Root element with necessary namespaces for Thymeleaf and layout decorators. -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/defaultTemplate}">
+
+<head>
+	<!-- Character set for the document -->
+	<meta charset="UTF-8">
+	<!-- Making sure the webpage is displayed correctly in Internet Explorer -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- Setting viewport for responsive design -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Dynamic title, defaults to "Dashboard" -->
+	<title th:text="${title}">Dashboard</title>
+
+	<style>
+		/* Styling specific text with fire-orange color */
+		.fire-orange-text {
+			color: #FF4500;
+			/* Fire orange color */
+		}
+
+		/* Styling specific text with navy color */
+		.navy-text {
+			color: navy;
+		}
+
+		/* Removing default list styles and padding */
+		ul {
+			list-style-type: none;
+			padding: 0;
+		}
+
+		/* Styling list items that are not inside a navbar */
+		li:not(.navbar li) {
+			padding: 8px 0;
+			border-bottom: 1px solid #f3f3f3;
+			/* subtle divider between list items */
+		}
+
+		/* Removing the bottom border from the last list item */
+		li:last-child {
+			border-bottom: none;
+		}
+
+		/* Styling for small text, like footnotes or secondary info */
+		small {
+			color: #777;
+			font-weight: 300;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Setting the page title variable -->
+	<th:block th:with="pageTitle='Dashboard'"></th:block>
+
+	<!-- Custom header fragment for the dashboard -->
+	<div th:fragment="customHeader">
+		<h1>GCU - Class Scheduler App (Admin Site)</h1>
+	</div>
+
+	<!-- Main content wrapper with styling -->
+	<div layout:fragment="content" style="max-width: 800px; margin: 0 auto; padding: 20px;">
+
+		<!-- Welcome header for the dashboard -->
+		<div th:fragment="workoutsHeader">
+			<h1 style="font-size: 2.8em;">Welcome to the Dashboard!</h1>
+		</div>
+
+	
+		<!-- Section displaying recent students -->
+		<section style="margin-bottom: 40px;">
+			<h2 class="navy-text">Recently Added Students</h2>
+			<ul>
+				<!-- Loop through each recent student and display their first_name, last_name, and email -->
+				<li th:each="student : ${recentStudents}">
+					<span th:text="${student.first_name}"></span>
+					<span th:text="${student.last_name}"></span>
+					<br>
+					<small th:text="${student.email}"></small>
+				</li>
+				
+				
+			</ul>
+		</section>
+		
+		
+			<!-- Section displaying recent classes -->
+		<section style="margin-bottom: 40px;">
+			<h2 class="navy-text">Recently Added Classes</h2>
+			<ul>
+				
+				
+				<!-- Loop through each recent class and display information -->
+				<li th:each="class : ${recentClasses}">
+					<span th:text="${class.class_name}"></span>
+					<br>
+					<small th:text="'Start: ' + ${class.getStart_date_time_formatted()}"></small>
+					<br>
+					<small th:text="'End: ' + ${class.getEnd_date_time_formatted()}"></small>
+				</li>
+				
+			</ul>
+		</section>
+
+	</div>
+</body>
+
+</html>

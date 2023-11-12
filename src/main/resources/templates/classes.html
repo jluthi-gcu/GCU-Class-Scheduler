@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/defaultTemplate}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${title}">Placeholder Title</title>
+
+	<style>
+		.navy-button {
+			display: inline-block;
+			padding: 10px 15px;
+			border: none;
+			background-color: navy;
+			color: white;
+			cursor: pointer;
+			border-radius: 4px;
+			text-decoration: none;
+			text-align: center;
+		}
+
+		.navy-button:hover,
+		.navy-button:focus,
+		.navy-button:active {
+			text-decoration: none;
+			color: white;
+			background-color: navy;
+		}
+
+		.navy-button:visited {
+			color: white;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		/* Styling for table headers */
+		th {
+			text-align: center;
+			font-weight: bold;
+			padding: 10px 15px;
+		}
+
+		/* Styling for table data */
+		td {
+			text-align: center;
+			padding: 10px 15px;
+			border-top: 1px solid #e0e0e0;
+		}
+
+		/* Alternate row background colors for better distinction */
+		tbody tr:nth-child(odd) {
+			background-color: #f7f7f7;
+		}
+
+		/* Adjusting column widths */
+		
+
+		/* Fire orange button styling */
+		.fire-orange-button {
+			display: inline-block;
+			padding: 5px 10px;
+			border: none;
+			background-color: #FF4500;
+			color: white;
+			cursor: pointer;
+			border-radius: 4px;
+			text-decoration: none;
+			text-align: center;
+			margin-bottom: 3px;
+		}
+
+		.fire-orange-button:hover,
+		.fire-orange-button:focus,
+		.fire-orange-button:active {
+			text-decoration: none;
+			color: white;
+			background-color: #FF6347;
+		}
+
+		.fire-orange-button:visited {
+			color: white;
+		}
+	</style>
+</head>
+
+<body>
+	<th:block th:with="pageTitle='Classes'"></th:block>
+
+	<div th:fragment="customHeader">
+		<h1>Offered Classes</h1>
+	</div>
+
+	<!-- The main content area of the page. -->
+	<div layout:fragment="content" style="padding-bottom: 50px;">
+
+		<!-- Custom header for the classes section of the page. -->
+		<div th:fragment="classesHeader">
+			<h1>Class List</h1>
+		</div>
+
+		<!-- Displaying the error message if it exists -->
+		<div th:if="${errorMessage}" class="alert alert-danger" style="text-align: center; margin-bottom: 20px;">
+			<p th:text="${errorMessage}"></p>
+		</div>
+
+		<div style="margin-bottom: 20px; display: flex; align-items: center; justify-content: center;">
+			<!-- Form Start -->
+			<form th:action="@{/classes/}" method="get">
+				
+
+			</form>
+		</div>
+
+		<!-- A table to display the list of class programs. -->
+		<table style="width:100%; margin-left:auto; margin-right:auto;">
+			<thead>
+				<tr>
+					<th colspan="1">Class Name</th>
+					<th colspan="1">Department</th>
+					<th colspan="1">Professor Name</th>
+					<th colspan="1">Class Size</th>
+					<th colspan="1">Start Date/Time</th>
+					<th colspan="1">End Date/Time</th>
+					<th colspan="1">Room Number</th>
+					<th colspan="1">Credits</th>
+					<th colspan="1">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Placeholder row if no classes are available -->
+				<tr th:if="${classes.empty}">
+					<td colspan="9">No Classes Available</td>
+				</tr>
+
+				<!-- Loop through each class and display its info -->
+				<tr th:each="class : ${classes}">
+					<td colspan="1" th:text="${class.class_name}"></td>
+					<td colspan="1" th:text="${class.department}"></td>
+					<td colspan="1" th:text="${class.professor_name}"></td>
+					<td colspan="1" th:text="${class.class_size}"></td>
+					<td colspan="1" th:text="${class.getStart_date_time_formatted()}"></td>
+					<td colspan="1" th:text="${class.getEnd_date_time_formatted()}"></td>
+					<td colspan="1" th:text="${class.room_number}"></td>
+					<td colspan="1" th:text="${class.credits}"></td>
+					<td colspan="1">
+						<!-- Edit and Delete buttons with confirm dialog for deletion -->
+						<a href="#" th:href="@{/classes/edit/{class_id}(class_id=${class.class_id})}"
+							class="fire-orange-button">Edit</a>
+						<a href="#" th:href="@{/classes/delete/{class_id}(class_id=${class.class_id})}" class="fire-orange-button"
+							th:onclick="return confirm('Are you sure you want to delete this class?');">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<!-- Action button to create a new class. -->
+		<div style="text-align: center; margin-top: 20px;">
+			<a href="#" th:href="@{/classes/create}" class="navy-button">Create New Class</a>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<!-- Root element with necessary namespaces for Thymeleaf and layout decorators. -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/defaultTemplate}">
+
+<head>
+	<!-- Set the document's character encoding to UTF-8 for proper interpretation of special characters. -->
+	<meta charset="UTF-8">
+
+	<!-- Ensures the page is displayed in edge mode for Internet Explorer (highest mode available to the version). -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<!-- Ensures the page is rendered properly on mobile and other small screen devices. -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Title of the page. It's dynamically set using Thymeleaf, with a fallback to "Placeholder Title". -->
+	<title th:text="${title}">Add Class</title>
+</head>
+
+<body>
+	<!-- Define a Thymeleaf variable 'pageTitle' for dynamic usage in templates. Here, it's set to 'Create Class'. -->
+	<th:block th:with="pageTitle='Create Class'"></th:block>
+
+	<!-- A custom header for the Create Class page. -->
+	<div th:fragment="customHeader">
+		<h1>Create Your Class</h1>
+	</div>
+
+	<!-- Main content area where the form to create class will be placed. -->
+	<div layout:fragment="content">
+		<!-- 
+		Wrapping div for the form. Styles are applied for presentation:
+		- max-width limits the form width.
+		- margin auto centers the form.
+		- padding, border, border-radius, and background-color stylize the form.
+		-->
+		<div
+			style="max-width: 500px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+			<!-- Form with Thymeleaf action to handle the creation of class. Uses POST method. -->
+			<form action="#" th:action="@{/classes/}" th:object="${class}" method="post">
+
+				<!-- Input field for the class name. -->
+				<div style="margin-bottom: 20px;">
+					<label for="class_name" style="display: block; margin-bottom: 8px;">Class Name:</label>
+					<input type="text" id="class_name" th:field="*{class_name}" placeholder="English 101"
+						style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+					<!-- Error message for the class name if validation fails. -->
+					<span th:if="${#fields.hasErrors('class_name')}" th:errors="*{class_name}"
+						style="display: block; color: red; margin-top: 5px;"></span>
+				</div>
+
+					<!-- Input field for the department. -->
+				<div style="margin-bottom: 20px;">
+					<label for="department" style="display: block; margin-bottom: 8px;">Department:</label>
+					<input type="text" id="department" th:field="*{department}" placeholder="Information Technology"
+						style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+					<!-- Error message for the class name if validation fails. -->
+					<span th:if="${#fields.hasErrors('department')}" th:errors="*{department}"
+						style="display: block; color: red; margin-top: 5px;"></span>
+				</div>
+
+
+				<!-- Input field for the professor name. -->
+				<div style="margin-bottom: 20px;">
+					<label for="professor_name" style="display: block; margin-bottom: 8px;">Professor Name:</label>
+					<input type="text" id="professor_name" th:field="*{professor_name}" placeholder="E.g. Jeremy Doyle"
+						style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+					<!-- Error message for the class name if validation fails. -->
+					<span th:if="${#fields.hasErrors('professor_name')}" th:errors="*{professor_name}"
+						style="display: block; color: red; margin-top: 5px;"></span>
+				</div>
+
+
+				<!-- Input field for the class size. -->
+				<div style="margin-bottom: 20px;">
+					<label for="class_size" style="display: block; margin-bottom: 8px;">Class Size:</label>
+					<input type="number" id="class_size" th:field="*{class_size}" placeholder="50" min="0"
+						style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+					<!-- Error message for the class duration if validation fails. -->
+					<span th:if="${#fields.hasErrors('class_size')}" th:errors="*{class_size}"
+						style="display: block; color: red; margin-top: 5px;"></span>
+				</div>
+
+
+				<!-- Input for selecting a date -->
+				<div class="form-group">
+					<label for="start_date_time">Start Date/Time:</label>
+					<input type="datetime-local" id="start_date_time" name="start_date_time"  class="form-control" required>
+				</div>
+
+				<!-- Input for selecting a date -->
+				<div class="form-group">
+					<label for="end_date_time">End Date/Time:</label>
+					<input type="datetime-local" id="end_date_time" name="end_date_time"  class="form-control" required>
+				</div>
+
+				<!-- Input field for the room number. -->
+				<div style="margin-bottom: 20px;">
+					<label for="room_number" style="display: block; margin-bottom: 8px;">Room Number:</label>
+					<input type="number" id="room_number" th:field="*{room_number}" placeholder="123" min="0"
+						style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+					<!-- Error message for the class duration if validation fails. -->
+					<span th:if="${#fields.hasErrors('room_number')}" th:errors="*{room_number}"
+						style="display: block; color: red; margin-top: 5px;"></span>
+				</div>
+				
+				
+				<!-- Input field for the credits. -->
+				<div style="margin-bottom: 20px;">
+					<label for="credits" style="display: block; margin-bottom: 8px;">Credits</label>
+					<input type="number" id="credits" th:field="*{credits}" placeholder="4" min="0"
+						style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+					<!-- Error message for the class duration if validation fails. -->
+					<span th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"
+						style="display: block; color: red; margin-top: 5px;"></span>
+				</div>
+
+			
+				<!-- Submit button for the form. -->
+				<div style="text-align: center; margin-top: 20px;">
+					<input type="submit" value="Create Class"
+						style="padding: 10px 15px; border: none; background-color: navy; color: white; cursor: pointer; border-radius: 4px;">
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>
