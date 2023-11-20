@@ -14,6 +14,7 @@ com\gcu\repository\ClassRepository.class
 com\gcu\SecurityConfig.class
 com\gcu\model\LoginModel.class
 com\gcu\model\User.class
+com\gcu\controller\HomeController.class
 com\gcu\repository\StudentRepository.class
 com\gcu\controller\DashboardController.class
 com\gcu\service\ClassService.class

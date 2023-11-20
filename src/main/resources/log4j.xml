@@ -17,7 +17,7 @@
                 value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c:%L - %m%n" />
         </layout>
     </appender>
-    <logger name="com.gcu" additivity="false">
+    <logger name="com.jcr" additivity="false">
         <level value="INFO" />
         <appender-ref ref="console" />
         <appender-ref ref="file" />
